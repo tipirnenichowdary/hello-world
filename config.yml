@@ -1,0 +1,88 @@
+jenkins:
+  systemMessage: |
+    -------------------  Jenkins -------------------
+  agentProtocols:
+  - "JNLP4-connect"
+  - "Ping"
+  authorizationStrategy:
+    globalMatrix:
+      permissions:
+        - "Job/Read:authenticated"
+        - "View/Read:authenticated"
+        - "Overall/Read:authenticated"
+        - "Overall/Administer:qxy9520"
+  crumbIssuer:
+      standard:
+          excludeClientIPFromCrumb: true
+  numExecutors: 2
+  securityRealm:
+    ldap:
+      configurations:
+        - groupMembershipStrategy:
+            fromUserRecord:
+              attributeName: " "
+          server: "ldaps://laas.bmwgroup.net:6362"
+          rootDN: "dc=bmwgroup,dc=com"
+          userSearchBase: ""
+          userSearch: "uid={0}"
+          managerDN: "uid=QQVNS00,ou=people,dc=bmwgroup,dc=com"
+          managerPasswordSecret: "0bl1x432"
+          displayNameAttributeName: "cn"
+          mailAddressAttributeName: "mail"
+  clouds:
+    - amazonEC2:
+        cloudName: "ec2"
+        instanceCapStr: 2
+        # this shouldn't be needed, since without explicit creds this should already be used
+        # but let's be explicit to avoid issues.
+        useInstanceProfileForCredentials: true
+        # Reminder: the following key has multiple lines
+        privateKey: |-
+          -----BEGIN RSA PRIVATE KEY-----
+          MIIEowIBAAKCAQEAm5TDb1a3G0FZEz43GQz5kPrTfKUj2ZUP/6faaxccAiUHM7RHLreLZIHBDieq nzb1eDvnAO6uwr6WlJLPb3GlXrVv5bld3bQDmDECI345xfNUm9sTy5ruAQJbRSpTdvjmD08Ky3Lb sB7OBsjUADRKYnE01RJu5h5QlHswIh+sJ5ajTo1AVLrvKCA+XznBhMh0IOitejsdrvULR0OtcMdR KHYtxB/jXIIQa3YENT8YO9WLGt9E8fjCWSXK9uXFvgyGGpqc7kjiwcj5QSwDXpQMm7/E4EwszMfa 75+pbNqFIYlq5w29QJLeNs0xmtbGBgx/7jHr8A5ASSbsIZSB/9zwIwIDAQABAoIBAQCC8b9Xmz17 xBFrf8ax39jA7EtJslgtDier/iN4VLfvGikonEf5CuRYUFkjR8F0RbZuXsR7ZWhTYkOsgq/yVU1h HAY07EITkiogUsdBBkEr2TRSBR5xFFHTKZ+V5BzhmnVPVzB3sZEzd4nh7e94yIn+ttdHqj8KkWMy xUfqwIuNuQPqiOdsTFiycD8rzs+8XXzUuL55yNDq8y8gUiR2baOFZvQIzGAoWtWlXTs4dR9oAidS Mo7Ww7d6LSJrw/ANkDTU2kooeOo0a5UecbAUlSO1389CgW+NZxqGAW6d91JOPsVc0XioV1Y9JEYX IBXtBEo8EAP1/wIx/4STsTKYh76xAoGBAPobQugiaCc/tHWxZ5NsGhcCug7UnqgFIWdqQo25bRCL Xj9p8KyuJ1HgPHsNYr74U/jDnCE0FbyoFcLCHsGBxCh5WVw8JB6e8TXpmLP5Q23xg5UkEHw4nisJ 5gYmDzjvopjo9WMtuN4Xsyx1s8iMjo+kqcogU+Ei6r/8ZSBfpOELAoGBAJ8/Sd8Ou0tjLdvwfawA B/Il8HzuakpYHCJYevkb0Y624JyGlF4AgKJtTdCViJ00XmsPteaPlsbSy9Bg5PGBlmLLknfAAs77 GhF/oketIqcWrDMQ72c8WrKgNxWo8et6/8JGZAhTX1/hMiXzi5/HbL34m568lDAvjRZ9IFCeDMxJ AoGAajnH6gYrDHh/MfmeTzv7vMg4s/HUTPKY5G56Q+18iClZZz+crArvwlOl/HGL/iZErASQvH19 ufn9/BEstO1jnfkkXgthH+xL8KT9aXs2C20ngOGnass1SnxSyUvC7WDCQ4W2K2CRAys3u2tmZ4hj SFkckC+40IdfAxm07dIRmk8CgYBiAmKlrPxq3oSn+7Bs/qvlRaJoUZgLX4UZQlmVHaDw8+7zhwSj gi2pShp9SLsG/ecqf0XVvAPxJGWaPzhIxxfWgDIKD5vq5bJamLI46P8N1S9wUnj1kbjEfUTJyOvz oQTt/cKtORrW+NOTdfw1/1gW535nyOpvaaSs9Z/A3jVEOQKBgETshZ7Un72eLgPbC8/5mK+2AFNk S0UOh97AdOmnqbGpzEAdfvRmiA0VPev25RuWqNtnfe95M15WPXZyM4WxD4R0SAddZHqiAO2d3yi9 FCdvJjMIinGSsoaqNsCygQ0KWPqaebFQ58zwCrpEF9Ddyw5SFiqUtXdVU/a4xX7Vt3Rl
+          -----END RSA PRIVATE KEY-----
+        noDelayProvisioning: true
+        region: "eu-central-1"
+        templates:
+        - ami: |
+            ami-07a2239169825788c
+          amiType:
+            unixData:
+              sshPort: "22"
+          associatePublicIp: true
+          connectBySSHProcess: false
+          connectionStrategy: PUBLIC_IP
+          deleteRootOnTermination: false
+          description: "Jenkins agent EC2 eu-central-1"
+          ebsOptimized: false
+          iamInstanceProfile: "arn:aws:iam::365017455393:instance-profile/jenkins_manager_profile"
+          idleTerminationMinutes: "-30"
+          instanceCapStr: "2"
+          labelString: "ec2-worker"
+          maxTotalUses: -1
+          mode: NORMAL
+          monitoring: false
+          numExecutors: 2
+          remoteAdmin: "ubuntu"
+          securityGroups: "sg-070624a9af960a0d4"
+          stopOnTerminate: false
+          subnetId: "subnet-0bb419d1e4eee4444, subnet-0ed31121a5335d102, subnet-0a56413cd7b980f38"
+          t2Unlimited: false
+          tags:
+          - name: "Name"
+            value: "jenkins-slave"
+          type: T2Medium
+          useDedicatedTenancy: false
+          useEphemeralDevices: true
+          zone: "eu-central-1c, eu-central-1b, eu-central-1a"
+      useInstanceProfileForCredentials: true
+  credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - string:
+              scope: GLOBAL
+              id: "secret-text"
+              secret: ${hello} #Load from Environment Variable
+              description: "Secret Text"
+          
