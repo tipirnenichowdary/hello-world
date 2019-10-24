@@ -4,13 +4,6 @@ jenkins:
   agentProtocols:
   - "JNLP4-connect"
   - "Ping"
-  authorizationStrategy:
-    globalMatrix:
-      permissions:
-        - "Job/Read:authenticated"
-        - "View/Read:authenticated"
-        - "Overall/Read:authenticated"
-        - "Overall/Administer:qxy9520"
   crumbIssuer:
       standard:
           excludeClientIPFromCrumb: true
