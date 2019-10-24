@@ -1,0 +1,249 @@
+jenkins:
+  agentProtocols:
+  - "JNLP4-connect"
+  - "Ping"
+  clouds:
+  - amazonEC2:
+      cloudName: "jenkins-slave"
+      credentialsId: "credential-id"
+      instanceCapStr: "1"
+      privateKey: |-
+        -----BEGIN RSA PRIVATE KEY-----
+        MIIEowIBAAKCAQEAm5TDb1a3G0FZEz43GQz5kPrTfKUj2ZUP/6faaxccAiUHM7RHLreLZIHBDieq nzb1eDvnAO6uwr6WlJLPb3GlXrVv5bld3bQDmDECI345xfNUm9sTy5ruAQJbRSpTdvjmD08Ky3Lb sB7OBsjUADRKYnE01RJu5h5QlHswIh+sJ5ajTo1AVLrvKCA+XznBhMh0IOitejsdrvULR0OtcMdR KHYtxB/jXIIQa3YENT8YO9WLGt9E8fjCWSXK9uXFvgyGGpqc7kjiwcj5QSwDXpQMm7/E4EwszMfa 75+pbNqFIYlq5w29QJLeNs0xmtbGBgx/7jHr8A5ASSbsIZSB/9zwIwIDAQABAoIBAQCC8b9Xmz17 xBFrf8ax39jA7EtJslgtDier/iN4VLfvGikonEf5CuRYUFkjR8F0RbZuXsR7ZWhTYkOsgq/yVU1h HAY07EITkiogUsdBBkEr2TRSBR5xFFHTKZ+V5BzhmnVPVzB3sZEzd4nh7e94yIn+ttdHqj8KkWMy xUfqwIuNuQPqiOdsTFiycD8rzs+8XXzUuL55yNDq8y8gUiR2baOFZvQIzGAoWtWlXTs4dR9oAidS Mo7Ww7d6LSJrw/ANkDTU2kooeOo0a5UecbAUlSO1389CgW+NZxqGAW6d91JOPsVc0XioV1Y9JEYX IBXtBEo8EAP1/wIx/4STsTKYh76xAoGBAPobQugiaCc/tHWxZ5NsGhcCug7UnqgFIWdqQo25bRCL Xj9p8KyuJ1HgPHsNYr74U/jDnCE0FbyoFcLCHsGBxCh5WVw8JB6e8TXpmLP5Q23xg5UkEHw4nisJ 5gYmDzjvopjo9WMtuN4Xsyx1s8iMjo+kqcogU+Ei6r/8ZSBfpOELAoGBAJ8/Sd8Ou0tjLdvwfawA B/Il8HzuakpYHCJYevkb0Y624JyGlF4AgKJtTdCViJ00XmsPteaPlsbSy9Bg5PGBlmLLknfAAs77 GhF/oketIqcWrDMQ72c8WrKgNxWo8et6/8JGZAhTX1/hMiXzi5/HbL34m568lDAvjRZ9IFCeDMxJ AoGAajnH6gYrDHh/MfmeTzv7vMg4s/HUTPKY5G56Q+18iClZZz+crArvwlOl/HGL/iZErASQvH19 ufn9/BEstO1jnfkkXgthH+xL8KT9aXs2C20ngOGnass1SnxSyUvC7WDCQ4W2K2CRAys3u2tmZ4hj SFkckC+40IdfAxm07dIRmk8CgYBiAmKlrPxq3oSn+7Bs/qvlRaJoUZgLX4UZQlmVHaDw8+7zhwSj gi2pShp9SLsG/ecqf0XVvAPxJGWaPzhIxxfWgDIKD5vq5bJamLI46P8N1S9wUnj1kbjEfUTJyOvz oQTt/cKtORrW+NOTdfw1/1gW535nyOpvaaSs9Z/A3jVEOQKBgETshZ7Un72eLgPbC8/5mK+2AFNk S0UOh97AdOmnqbGpzEAdfvRmiA0VPev25RuWqNtnfe95M15WPXZyM4WxD4R0SAddZHqiAO2d3yi9 FCdvJjMIinGSsoaqNsCygQ0KWPqaebFQ58zwCrpEF9Ddyw5SFiqUtXdVU/a4xX7Vt3Rl
+        -----END RSA PRIVATE KEY-----
+      region: "eu-central-1"
+      templates:
+      - ami: |
+          ami-07a2239169825788c
+        amiType:
+          unixData:
+            sshPort: "22"
+        associatePublicIp: true
+        connectBySSHProcess: false
+        connectionStrategy: PUBLIC_IP
+        deleteRootOnTermination: false
+        description: "Jenkins agent EC2 eu-central-1"
+        ebsOptimized: false
+        iamInstanceProfile: "arn:aws:iam::365017455393:instance-profile/jenkins_manager_profile"
+        idleTerminationMinutes: "-30"
+        instanceCapStr: "2"
+        labelString: "ec2-worker"
+        maxTotalUses: -1
+        mode: NORMAL
+        monitoring: false
+        numExecutors: 2
+        remoteAdmin: "ubuntu"
+        securityGroups: "sg-070624a9af960a0d4"
+        stopOnTerminate: false
+        subnetId: "subnet-0bb419d1e4eee4444, subnet-0ed31121a5335d102, subnet-0a56413cd7b980f38"
+        t2Unlimited: false
+        tags:
+        - name: "Name"
+          value: "jenkins-slave"
+        type: T2Medium
+        useDedicatedTenancy: false
+        useEphemeralDevices: true
+        zone: "eu-central-1c, eu-central-1b, eu-central-1a"
+      useInstanceProfileForCredentials: true
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: true
+  disableRememberMe: false
+  globalNodeProperties: |-
+    FAILED TO EXPORT
+    hudson.model.Hudson#globalNodeProperties: io.jenkins.plugins.casc.ConfiguratorException: Can't read attribute 'env' from hudson.slaves.EnvironmentVariablesNodeProperty@355da4a7
+      at io.jenkins.plugins.casc.Attribute._getValue(Attribute.java:396)
+      at io.jenkins.plugins.casc.Attribute.getValue(Attribute.java:218)
+      at io.jenkins.plugins.casc.impl.configurators.DataBoundConfigurator.describe(DataBoundConfigurator.java:282)
+      at io.jenkins.plugins.casc.impl.configurators.HeteroDescribableConfigurator.lambda$convertToNode$de0cd4f8$1(HeteroDescribableConfigurator.java:283)
+      at io.vavr.CheckedFunction0.lambda$unchecked$52349c75$1(CheckedFunction0.java:247)
+      at io.jenkins.plugins.casc.impl.configurators.HeteroDescribableConfigurator.convertToNode(HeteroDescribableConfigurator.java:283)
+      at io.jenkins.plugins.casc.impl.configurators.HeteroDescribableConfigurator.lambda$describe$5(HeteroDescribableConfigurator.java:107)
+      at io.vavr.control.Option.map(Option.java:392)
+      at io.jenkins.plugins.casc.impl.configurators.HeteroDescribableConfigurator.describe(HeteroDescribableConfigurator.java:107)
+      at io.jenkins.plugins.casc.impl.configurators.HeteroDescribableConfigurator.describe(HeteroDescribableConfigurator.java:55)
+      at io.jenkins.plugins.casc.Attribute._describe(Attribute.java:264)
+      at io.jenkins.plugins.casc.Attribute.describe(Attribute.java:239)
+      at io.jenkins.plugins.casc.Configurator.describe(Configurator.java:162)
+  markupFormatter: "plainText"
+  mode: NORMAL
+  myViewsTabBar: "standard"
+  numExecutors: 2
+  primaryView:
+    all:
+      name: "all"
+  projectNamingStrategy: "standard"
+  quietPeriod: 5
+  remotingSecurity:
+    enabled: false
+  scmCheckoutRetryCount: 0
+  securityRealm:
+    local:
+      allowsSignup: false
+      enableCaptcha: false
+      users:
+      - id: "admin"
+  slaveAgentPort: 50000
+  updateCenter:
+    sites:
+    - id: "default"
+      url: "https://updates.jenkins.io/update-center.json"
+  views:
+  - all:
+      name: "all"
+  viewsTabBar: "standard"
+security:
+  downloadSettings:
+    useBrowser: false
+  globalJobDslSecurityConfiguration:
+    useScriptSecurity: false
+  remotingCLI:
+    enabled: false
+  sSHD:
+    port: -1
+unclassified:
+  ansiColorBuildWrapper:
+    colorMaps:
+    - black: "#000000"
+      blackB: "#4C4C4C"
+      blue: "#1E90FF"
+      blueB: "#4682B4"
+      cyan: "#00CDCD"
+      cyanB: "#00FFFF"
+      green: "#00CD00"
+      greenB: "#00FF00"
+      magenta: "#CD00CD"
+      magentaB: "#FF00FF"
+      name: "xterm"
+      red: "#CD0000"
+      redB: "#FF0000"
+      white: "#E5E5E5"
+      whiteB: "#FFFFFF"
+      yellow: "#CDCD00"
+      yellowB: "#FFFF00"
+    - black: "#000000"
+      blackB: "#555555"
+      blue: "#0000AA"
+      blueB: "#5555FF"
+      cyan: "#00AAAA"
+      cyanB: "#55FFFF"
+      defaultBackground: 0
+      defaultForeground: 7
+      green: "#00AA00"
+      greenB: "#55FF55"
+      magenta: "#AA00AA"
+      magentaB: "#FF55FF"
+      name: "vga"
+      red: "#AA0000"
+      redB: "#FF5555"
+      white: "#AAAAAA"
+      whiteB: "#FFFFFF"
+      yellow: "#AA5500"
+      yellowB: "#FFFF55"
+    - black: "black"
+      blackB: "black"
+      blue: "blue"
+      blueB: "blue"
+      cyan: "cyan"
+      cyanB: "cyan"
+      green: "green"
+      greenB: "green"
+      magenta: "magenta"
+      magentaB: "magenta"
+      name: "css"
+      red: "red"
+      redB: "red"
+      white: "white"
+      whiteB: "white"
+      yellow: "yellow"
+      yellowB: "yellow"
+    - black: "#2E3436"
+      blackB: "#2E3436"
+      blue: "#3465A4"
+      blueB: "#3465A4"
+      cyan: "#06989A"
+      cyanB: "#06989A"
+      defaultBackground: 0
+      defaultForeground: 7
+      green: "#4E9A06"
+      greenB: "#4E9A06"
+      magenta: "#75507B"
+      magentaB: "#75507B"
+      name: "gnome-terminal"
+      red: "#CC0000"
+      redB: "#CC0000"
+      white: "#D3D7CF"
+      whiteB: "#D3D7CF"
+      yellow: "#C4A000"
+      yellowB: "#C4A000"
+  bitbucketEndpointConfiguration:
+    endpoints:
+    - bitbucketCloudEndpoint:
+        enableCache: false
+        manageHooks: false
+        repositoriesCacheDuration: 0
+        teamCacheDuration: 0
+  buildStepOperation:
+    enabled: false
+  extendedEmailPublisher:
+    adminRequiredForTemplateTesting: false
+    allowUnregisteredEnabled: false
+    charset: "UTF-8"
+    debugMode: false
+    defaultBody: |-
+      $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+
+      Check console output at $BUILD_URL to view the results.
+    defaultSubject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!"
+    maxAttachmentSize: -1
+    maxAttachmentSizeMb: 0
+    precedenceBulk: false
+    useSsl: false
+    watchingEnabled: false
+  gitHubPluginConfig:
+    hookUrl: "http://ec2-18-195-117-151.eu-central-1.compute.amazonaws.com:8080/github-webhook/"
+  gitSCM:
+    createAccountBasedOnEmail: false
+  globalLibraries:
+    libraries:
+    - defaultVersion: "master"
+      name: "pipeline_experiments"
+      retriever:
+        modernSCM:
+          scm:
+            git:
+              credentialsId: "ghe-tools-pat"
+              id: "f2685127-a5e0-4d66-bc5a-a560aee99e8e"
+              remote: "https://code.connected.bmw/bitbucket-readonly/bmw-ci-tasks-sharedlib.git"
+              traits:
+              - "branchDiscoveryTrait"
+  globalSettings:
+    failOnCorrupt: false
+    noAuthors: false
+    quietMode: false
+  location:
+    adminAddress: "address not configured yet <nobody@nowhere>"
+  mailer:
+    adminAddress: "address not configured yet <nobody@nowhere>"
+    charset: "UTF-8"
+    useSsl: false
+  mavenModuleSet:
+    localRepository: "default"
+  pollSCM:
+    pollingThreadCount: 10
+  simple-theme-plugin:
+    cssUrl: "https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-blue-grey.css"
+    elements:
+    - cssUrl:
+        url: "https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-blue-grey.css"
+  timestamperConfig:
+    allPipelines: false
+    elapsedTimeFormat: "'<b>'HH:mm:ss.S'</b> '"
+    systemTimeFormat: "'<b>'HH:mm:ss'</b> '"
+  upstream:
+    globalUpstreamFilterStrategy: UseOldest
+tool:
+  git:
+    installations:
+    - home: "git"
+      name: "Default"
