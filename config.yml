@@ -85,4 +85,3 @@ jenkins:
               id: "secret-text"
               secret: ${hello} #Load from Environment Variable
               description: "Secret Text"
-          
